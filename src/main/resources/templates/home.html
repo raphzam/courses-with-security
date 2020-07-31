@@ -72,6 +72,11 @@ This page is open to the public (without logging in)<br>
     <p><a href="#CourseDetail">[[${course.title}]]</a></p>
     <p>Instructor: [[${course.instructor}]]</p>
 
+    <div sec:authorize="hasRole('ROLE_STUDENT')">
+        <a th:href="@{/enroll/{id} (id=${course.id})}" href="#AddCourse">Add Course</a>
+
+    </div>
+
 </div>
 
 

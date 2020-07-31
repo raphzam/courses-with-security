@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -72,5 +73,14 @@ public class User {
     public void clearPassword(){
         this.password="";
     }
+
+    public void enrollCourse(Course course){
+        if (this.courses==null){
+            this.courses=new HashSet<Course>();
+        }
+        this.courses.add(course);
+    }
+
+
 
 }

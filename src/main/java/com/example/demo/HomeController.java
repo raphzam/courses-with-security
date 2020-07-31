@@ -154,8 +154,27 @@ public class HomeController {
 
     //    STUDENT VIEWS
     @GetMapping("/studentportal")
-    public String loadStudentPortal() {
+    public String loadStudentPortal(Principal principal, Model model) {
+
+        User student = userRepository.findByUsername(principal.getName());
+        model.addAttribute("myCourses", student.getCourses());
+
         return "studentportal";
+    }
+
+    @RequestMapping("/enroll/{id}")
+    public String enrollCourse(@PathVariable("id") long courseID, Model model, Principal principal){
+        //find the course
+        Course course = courseRepository.findById(courseID).get();
+
+        //find current logged in user and save course to their set
+        User student = userRepository.findByUsername(principal.getName());
+        student.enrollCourse(course);
+
+        //save changes to user repository
+        userRepository.save(student);
+
+        return "redirect:/";
     }
 
 }

@@ -16,8 +16,14 @@
 
 <h1>Welcome, Student</h1>
 
-<a href="#">Request to Add Class</a>
-<a href="#">View My Courses</a>
+
+<h3><a href="#">My Course Schedule</a></h3>
+
+<div th:each="course : ${myCourses}">
+
+    <p>$[[course.title]]</p>
+    
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
