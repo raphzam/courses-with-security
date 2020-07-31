@@ -58,10 +58,11 @@ This page is open to the public (without logging in)<br>
     Welcome,
     <div sec:authentication="name"></div>
     Role:
-    <div sec:authentication="principal.authorities"></div>
+    <div sec:authentication="principal.authorities"></div><br>
 </div>
 
-<p>Teachers: Login to modify courses</p>
+<p>Teachers: Login to modify YOUR courses and create new ones</p>
+<br>
 <p>Students: Login to add and drop classes<br>
     Don't have an account yet? <a th:href="@{/newstudent}">Register As Student</a></p>
 
