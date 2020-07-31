@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .logout {
+            background: none;
+            border: none;
+            color: #0066ff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+
+    <title>Java University</title>
+</head>
+<body>
+
+<div th:fragment="navLinks">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <a class="nav-link" th:href="@{/}">
+                    <li class="nav-item">Home</li>
+                </a>
+                <a class="nav-link" th:href="@{/login}">
+                    <li class="nav-item">Login</li>
+                </a>
+
+                <span sec:authorize="hasRole('SUPER')"><a class="nav-link" th:href="@{/super}" href="#">
+        <li class="nav-item">Super Portal</li>
+    </a></span>
+                <span sec:authorize="hasRole('TEACHER')"><a class="nav-link" th:href="@{/teacherportal}" href="#">
+        <li class="nav-item">Teacher Portal</li>
+    </a></span>
+                <span sec:authorize="hasRole('STUDENT')"><a class="nav-link" th:href="@{/studentportal}" href="#">
+        <li class="nav-item">Student Portal</li>
+    </a></span>
+            </ul>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" class="logout" value="Logout"/>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<h1>Course Catalog</h1>
+This page is open to the public (without logging in)<br>
+<div sec:authorize="isAuthenticated()">
+
+    Welcome,
+    <div sec:authentication="name"></div>
+    Role:
+    <div sec:authentication="principal.authorities"></div>
+</div>
+
+<p>Teachers: Login to modify courses</p>
+<p>Students: Login to add and drop classes<br>
+    Don't have an account yet? <a th:href="@{/newstudent}">Register As Student</a></p>
+
+<h3>Fall 2020 Course Catalog</h3>
+<div th:each="course : ${catalog}">
+
+    <p><a href="#CourseDetail">[[${course.title}]]</a></p>
+    <p>Instructor: [[${course.instructor}]]</p>
+
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
